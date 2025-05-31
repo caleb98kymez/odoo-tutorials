@@ -13,6 +13,7 @@
         <field name="arch" type="xml">
             <list string="Properties">
                 <field name="name"/>
+                <field name="property_type_id"/>
                 <field name="postcode"/>
                 <field name="bedrooms"/>
                 <field name="living_area"/>
@@ -34,17 +35,20 @@
                             <field name="name" class="mb16"/>
                         </h1>
                     </div>
+                    <field name="tags_id" widget="many2many_tags" class="mb16"/>
                     <group>
                         <group>
+                            <field name="property_type_id"/>
                             <field name="postcode"/>
-                            <field name="expected_price"/>
                         </group>
                         <group>
-                            <field name="date_availability"/>
+                            <field name="expected_price"/>
+                            <field name="best_price" />
                             <field name="selling_price"/>
                         </group>
                         <group>
-                            <field name="state" />
+                            <field name="date_availability"/>
+                            <field name="state"/>
                         </group>
                     </group>
 
@@ -59,6 +63,16 @@
                                 <field name="garden"/>
                                 <field name="garden_area"/>
                                 <field name="garden_orientation"/>
+                                <field name="total_area" />
+                            </group>
+                        </page>
+                        <page string="Offers">
+                            <field name="offer_ids"/>
+                        </page>
+                        <page string="Other Info">
+                            <group>
+                                <field name="salesman_id"/>
+                                <field name="buyer_id"/>
                             </group>
                         </page>
                     </notebook>
@@ -72,16 +86,17 @@
         <field name="model">real.estate.property</field>
         <field name="arch" type="xml">
             <search string="Search Properties">
-                <field name="name" />
-                <field name="postcode" />
-                <field name="expected_price" />
-                <field name="bedrooms" />
-                <field name="living_area" />
-                <field name="facades" />
-                <separator />
-                <filter string="State" name="state" domain="['|', ('state', '=', 'new'), ('state', '=','offer_received')]" />
+                <field name="name"/>
+                <field name="postcode"/>
+                <field name="expected_price"/>
+                <field name="bedrooms"/>
+                <field name="living_area"/>
+                <field name="facades"/>
+                <separator/>
+                <filter string="State" name="state"
+                        domain="['|', ('state', '=', 'new'), ('state', '=','offer_received')]"/>
                 <group expand="1" string="Group By">
-                    <filter string="Postcode" name="postcode" context="{'group_by':'postcode'}" />
+                    <filter string="Postcode" name="postcode" context="{'group_by':'postcode'}"/>
                 </group>
             </search>
         </field>
